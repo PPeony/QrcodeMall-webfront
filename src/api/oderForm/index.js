@@ -19,7 +19,7 @@ export const selectOneOrderForm = params => {
 export const selectAllOrderForms = params => {
     return server({
         method: 'get',
-        url: '/orderForm/allOrderForms',
+        url: '/orderForm/myOrderForm',
         params
     });
 };

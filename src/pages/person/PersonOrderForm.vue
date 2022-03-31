@@ -1,8 +1,8 @@
 <template>
 
     <el-container>
-        <el-tabs style="width: 100%">
-            <el-tab-pane label="未付款">
+        <el-tabs style="width: 100%" @tab-click="handleClick">
+            <el-tab-pane label="未付款" id="unpay">
                 <split-table :headData="headData" :bodyData="orderForms"
                              :operFlag="true" :tableEditFlag="false" :checkFlag="false">
                     <template slot="operate" slot-scope="props">
@@ -18,18 +18,20 @@
                         :total="total1"
                         :page-size="9"
                         @current-change="currentChange1"
+                        :current-page="currentPage"
                         style="float: left">
                 </el-pagination>
             </el-tab-pane>
-            <el-tab-pane label="已付款">
+            <el-tab-pane label="已付款" id="payed">
                 <split-table :headData="headData" :bodyData="orderForms1" :checkFlag="false"
                              :operFlag="false" :tableEditFlag="false">
                 </split-table>
                 <el-pagination
                         layout="prev, pager, next"
-                        :total="total1"
+                        :total="total2"
                         :page-size="9"
                         @current-change="currentChange2"
+                        :current-page="currentPage2"
                         style="float: left">
                 </el-pagination>
             </el-tab-pane>
@@ -52,7 +54,9 @@
                 orderForms: [],
                 orderForms1: [],
                 total1: 0,
-                total2: 0
+                total2: 0,
+                currentPage:1,
+                currentPage2:1
             }
         },
         created() {
@@ -60,20 +64,26 @@
         },
         methods: {
 
-
+            handleClick(tab,event){
+              console.log(tab,event)
+              if (event.target.innerHTML === '已付款') {
+                console.log("handleclick payed")
+                this.currentChange2(1)
+              }
+            },
             buyGoods(orderFormId, orderFormPrice, orderFormNumber) {
 
                 location.href =
                     `http://localhost:8090/QRCodeMall/orderForm/buyGoods?orderFormId=${orderFormId}&orderFormNumber=${orderFormNumber}&orderFormPrice=${orderFormPrice}&orderFormPayType=1`;
             },
             currentChange1(pageNum) {
-                this.total1 = 0;
+                this.currentPage=pageNum
                 selectAllOrderForms({
-                    pageNum: pageNum
+                    pageNum: pageNum,
+                    orderFormStatus:0
                 }).then(res => {
-
+/*
                     for (let i = 0; i < res.data.data.list.length; i++) {
-
                         let item = res.data.data.list[i];
                         let orderForm = item.orderForm;
                         let details = item.details;
@@ -103,18 +113,50 @@
                             );
                         }
                     }
+                    */
+                  this.orderForms = []
+                  this.total1 = res.data.data.total
+                  for (let i = 0; i < res.data.data.list.length; i++) {
+                    let item = res.data.data.list[i];
+                    let orderForm = item.orderForm;
+                    let details = item.details;
+                    let goodsNames = [];
+                    let goodsPrices = [];
+                    let goodsQrcodeQuantitys = [];
+                    let goodsTypeNames = [];
+                    for (let j = 0; j < details.length; j++) {
+                      goodsNames.push(details[j].goodsName);
+                      goodsPrices.push(details[j].goodsPrice);
+                      goodsQrcodeQuantitys.push(details[j].goodsQrcodeQuantity);
+                      goodsTypeNames.push(details[j].goodsTypeName);
+                    }
+                    this.orderForms.push(
+                        {
+                          orderFormId: orderForm.orderFormId,
+                          orderFormNumber: orderForm.orderFormNumber,
+                          gmtCreated: orderForm.gmtCreated,
+                          goodsNames: goodsNames,
+                          goodsPrices: goodsPrices,
+                          goodsQrcodeQuantitys: goodsQrcodeQuantitys,
+                          goodsTypeNames: goodsTypeNames,
+                          orderFormPrice: orderForm.orderFormPrice,
+                        }
+                    );
+                  }
                 });
             },
 
 
             currentChange2(pageNum) {
-                this.total2 = 0;
+
+                this.currentPage2 = pageNum
                 selectAllOrderForms({
-                    pageNum: pageNum
+                    pageNum: pageNum,
+                    orderFormStatus:1
                 }).then(res => {
-
+                    this.orderForms1 = []
+                  this.total2 = res.data.data.total
                     for (let i = 0; i < res.data.data.list.length; i++) {
-
                         let item = res.data.data.list[i];
                         let orderForm = item.orderForm;
                         let details = item.details;
@@ -122,15 +164,14 @@
                         let goodsPrices = [];
                         let goodsQrcodeQuantitys = [];
                         let goodsTypeNames = [];
-                        if (orderForm.orderFormStatus === 1) {
-                            this.total2++;
+
                             for (let j = 0; j < details.length; j++) {
                                 goodsNames.push(details[j].goodsName);
                                 goodsPrices.push(details[j].goodsPrice);
                                 goodsQrcodeQuantitys.push(details[j].goodsQrcodeQuantity);
                                 goodsTypeNames.push(details[j].goodsTypeName);
                             }
-                            this.orderForms.push(
+                            this.orderForms1.push(
                                 {
                                     orderFormId: orderForm.orderFormId,
                                     orderFormNumber: orderForm.orderFormNumber,
@@ -142,15 +183,15 @@
                                     orderFormPrice: orderForm.orderFormPrice,
                                 }
                             );
-                        }
+
                     }
                 });
             },
 
 
             fetchData() {
-                selectAllOrderForms().then(res => {
-
+                selectAllOrderForms({orderFormStatus:0}).then(res => {
+                    /*
                     for (let i = 0; i < res.data.data.list.length; i++) {
 
                         let item = res.data.data.list[i];
@@ -208,6 +249,36 @@
 
 
                     }
+
+                     */
+                  this.total1 = res.data.data.total
+                  for (let i = 0; i < res.data.data.list.length; i++) {
+                    let item = res.data.data.list[i];
+                    let orderForm = item.orderForm;
+                    let details = item.details;
+                    let goodsNames = [];
+                    let goodsPrices = [];
+                    let goodsQrcodeQuantitys = [];
+                    let goodsTypeNames = [];
+                    for (let j = 0; j < details.length; j++) {
+                      goodsNames.push(details[j].goodsName);
+                      goodsPrices.push(details[j].goodsPrice);
+                      goodsQrcodeQuantitys.push(details[j].goodsQrcodeQuantity);
+                      goodsTypeNames.push(details[j].goodsTypeName);
+                    }
+                    this.orderForms.push(
+                        {
+                          orderFormId: orderForm.orderFormId,
+                          orderFormNumber: orderForm.orderFormNumber,
+                          gmtCreated: orderForm.gmtCreated,
+                          goodsNames: goodsNames,
+                          goodsPrices: goodsPrices,
+                          goodsQrcodeQuantitys: goodsQrcodeQuantitys,
+                          goodsTypeNames: goodsTypeNames,
+                          orderFormPrice: orderForm.orderFormPrice,
+                        }
+                    );
+                  }
                 });
             },
         }
