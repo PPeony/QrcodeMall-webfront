@@ -2,8 +2,8 @@
 
 
     <div>
-        <span style=""> 二维码商城
-       客服 qq：2559659331</span>
+        <span style=""> 二维码商城1.1
+       </span>
     </div>
 </template>
 

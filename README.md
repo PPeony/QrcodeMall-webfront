@@ -1,6 +1,11 @@
-# 一物一码自助商户商品溯源系统
+# QRCodeMall用户侧前端
 vue+axios+vue-router+element-ui
-这里只有前端代码，等待后端同学迁移过来
+这里只有前端代码，后端代码点[这里](https://github.com/PPeony/QRCodeMall)
+
+# How to run
+1. 修改链接ip，src/api/config.js和其他todo位置
+2. 单机运行：```npm install```,```npm run server```,打包```npm run build```
+3. 集群运行，参考[后端代码Readme](https://github.com/PPeony/QRCodeMall)
 
  ## 用户部分
  * 用户登录
@@ -20,6 +25,7 @@ vue+axios+vue-router+element-ui
 * 添加二维码
 
 ##  商城部分
+* **秒杀**
 *  显示商品类别
 *  加购物车
  *  添加商品进购物车
@@ -36,5 +42,3 @@ vue+axios+vue-router+element-ui
 *  各类表增删改查等 
 
 
-可以点击链接测试
-网站地址：[stu.jeehon.com](http://stu.jeehon.com) 可以注册账号，也可以使用测试账号测试： cgc2,12345678

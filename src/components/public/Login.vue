@@ -14,11 +14,11 @@
                     <el-form-item>
                         <el-input show-password placeholder="密码" v-model="ruleForm.password"></el-input>
                     </el-form-item>
-                    <el-form-item>
-                        <el-link href="/public/forgetPassword" :underline="false" style="text-decoration: none;color: black;float: right;margin-right: 5px" @click="forgetPassword">
-                            忘记密码
-                        </el-link>
-                    </el-form-item>
+<!--                    <el-form-item>-->
+<!--                        <el-link href="/public/forgetPassword" :underline="false" style="text-decoration: none;color: black;float: right;margin-right: 5px" @click="forgetPassword">-->
+<!--                            忘记密码-->
+<!--                        </el-link>-->
+<!--                    </el-form-item>-->
                     <el-form-item>
                         <el-button type="primary" @click="login" style="width: 350px">登录</el-button>
                     </el-form-item>

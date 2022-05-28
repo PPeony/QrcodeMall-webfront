@@ -27,11 +27,11 @@
       <el-form-item prop="userFatherProxyName">
         <el-input placeholder="请输入推荐你的人的用户名(选填)" v-model="ruleForm.userFatherProxyName"/>
       </el-form-item>
-      <el-form-item prop="verifyCode">
-        <el-input placeholder="请输入验证码" style="width: 280px" v-model="ruleForm.verifyCode"/>
-        &nbsp;
-        <el-button :disabled="isDisabled" @click="sendCode">{{ codeValue }}</el-button>
-      </el-form-item>
+<!--      <el-form-item prop="verifyCode">-->
+<!--        <el-input placeholder="请输入验证码" style="width: 280px" v-model="ruleForm.verifyCode"/>-->
+<!--        &nbsp;-->
+<!--        <el-button :disabled="isDisabled" @click="sendCode">{{ codeValue }}</el-button>-->
+<!--      </el-form-item>-->
       <el-form-item>
         <el-button type="primary" @click="doRegister" style="width: 400px">注册</el-button>
       </el-form-item>
@@ -46,7 +46,7 @@
 <script>
 
 
-import {register, sendVerifyCode, checkVerifyCode} from "../../api/user"
+import {register, sendVerifyCode} from "../../api/user"
 import {selectUser} from '@/api/admin'
 
 
@@ -139,14 +139,14 @@ export default {
     }
 
 
-    let checkVerifCode = (rule, value, callback) => {
-      if (value === '') {
-        callback("验证码不能为空");
-
-      } else {
-        callback();
-      }
-    }
+    // let checkVerifCode = (rule, value, callback) => {
+    //   if (value === '') {
+    //     callback("验证码不能为空");
+    //
+    //   } else {
+    //     callback();
+    //   }
+    // }
 
 
     let checkPassword = (rule, value, callback) => {
@@ -179,7 +179,7 @@ export default {
         userName: [{validator: userNameIsExist, trigger: 'blur'}],
         userPhone: [{validator: userPhoneIsExist, trigger: 'blur'}],
         userPassword: [{validator: checkPassword, trigger: 'blur'}],
-        verifyCode: [{validator: checkVerifCode}],
+        // verifyCode: [{validator: checkVerifCode}],
         userFatherProxyName: [{validator: userFatherProxyNameIsExist, trigger: 'blur'}],
         userEmail: [{validator: userEmailCheck, trigger: 'blur'}],
 
@@ -223,11 +223,11 @@ export default {
       this.$refs.ruleForm.validate(valid => {
         if (valid) {
 
-          checkVerifyCode(JSON.stringify({
-            verifyCode: this.ruleForm.verifyCode,
-            userPhone: this.ruleForm.userPhone
-          })).then(res => {
-            if (res.data.code === 200 || res.data.code === 201) {
+          // checkVerifyCode(JSON.stringify({
+          //   verifyCode: this.ruleForm.verifyCode,
+          //   userPhone: this.ruleForm.userPhone
+          // })).then(res => {
+          //   if (res.data.code === 200 || res.data.code === 201) {
               if (this.ruleForm.userFatherProxyName === '') {
                 delete this.ruleForm["userFatherProxyName"];
               }
@@ -241,10 +241,10 @@ export default {
 
                 }
               });
-            } else {
-              this.$message.error("验证码错误");
-            }
-          });
+          //   } else {
+          //     this.$message.error("验证码错误");
+          //   }
+          // });
 
         }
       })

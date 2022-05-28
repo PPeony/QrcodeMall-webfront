@@ -101,7 +101,7 @@
                         <el-divider>{{goods.goodsIntroduction}}</el-divider>
 
                         <div style="margin-top: 10px">
-                            <h3>¥{{goods.goodsPrice}}</h3>
+                            <h3>¥{{goods.goodsPrice}} 二维码数量：{{goods.goodsQrcodeQuantity}}</h3>
                             <el-button type="danger"
                                        @click="addOneOrderForm(goods.goodsId)" plain style="border-radius: 0 !important;">
                                 立即购买

@@ -62,7 +62,7 @@
 
           <div style="padding-top: 80px;text-align: center;padding-bottom: 80px">
             <router-link :to="{path:'/public/goodsPromotion'}">
-            今日特惠
+            <h2>今日特惠</h2>
             </router-link>
           </div>
 

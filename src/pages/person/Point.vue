@@ -4,6 +4,7 @@
             <h1>积分兑换</h1>
         </el-header>
         <el-main>
+          您有{{user.userPoint}}积分
             <el-card style="width: 300px;height: 150px">
                 <el-input-number placeholder="10积分兑换1元" :step="10" v-model="point"/>
                 <el-divider/>
@@ -19,13 +20,22 @@
 
     export default {
         name: "Point",
-        computed:{
+      created() {
+        selectUser().then(res=>{
+          this.user=res.data.data;
+          console.log("created")
+          console.log(this.user)
+          console.log(this.user.userPoint)
+        });
+      },
+      computed:{
           ca(){
               return this.point * 0.1;
           }
         },
         data(){
             return{
+              user:{},
                 point:10
             }
         },
@@ -45,7 +55,7 @@
                         })).then(()=>{
                             this.$notify({
                                 title: '兑换成功',
-                                message: '请到qq号为2559659331的客服去领取兑换的钱',
+                                message: '请到xx去领取兑换的钱',
                                 type: 'success'
                             });
                         });

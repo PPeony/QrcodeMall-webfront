@@ -72,9 +72,9 @@
               }
             },
             buyGoods(orderFormId, orderFormPrice, orderFormNumber) {
-
+//todo,修改
                 location.href =
-                    `http://localhost:8090/QRCodeMall/orderForm/buyGoods?orderFormId=${orderFormId}&orderFormNumber=${orderFormNumber}&orderFormPrice=${orderFormPrice}&orderFormPayType=1`;
+                    `http://云主机ip:32557/QRCodeMall/orderForm/buyGoods?orderFormId=${orderFormId}&orderFormNumber=${orderFormNumber}&orderFormPrice=${orderFormPrice}&orderFormPayType=1`;
             },
             currentChange1(pageNum) {
                 this.currentPage=pageNum

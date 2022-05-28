@@ -1,14 +1,16 @@
 import axios from 'axios';
 let node_base_url;
 if (process.env.NODE_ENV == 'development') {
-  node_base_url = 'http://localhost:8080/api';
+  // node_base_url = 'http://localhost:32555/api';
+    node_base_url = 'http://云主机ip:32555/api';
 } else {
-  node_base_url = 'http://www.huiazir.com:8080/api';
+  node_base_url = 'http://www.huiazir.com:32555/api';
 }
 
 axios.defaults.withCredentials=true;
 let server = axios.create({
-  baseURL: 'http://localhost:8090/QRCodeMall', //请求url
+  // baseURL: 'http://localhost:32557/QRCodeMall' ,
+  baseURL: 'http://云主机ip:32557/QRCodeMall', //请求url
   timeout: 5000, //超时处理
   withCredentials: true, //是否跨域
 });

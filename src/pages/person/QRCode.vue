@@ -18,7 +18,7 @@
 
                     <template scope="scope">
                         <el-link type="primary"
-                                 :href="`http://localhost:8080/static/code-view/view.html?qrcodeId=${scope.row.qrcodeId}`">链接
+                                 :href="`http://云主机ip:32555/static/code-view/view.html?qrcodeId=${scope.row.qrcodeId}`">链接
                         </el-link>
                     </template>
                 </el-table-column>
@@ -29,7 +29,7 @@
 
                     <template scope="scope">
                         <el-image
-                                :src="`https://api.pwmqr.com/qrcode/create/?url=http://localhost:8080/view/view.html?qrcodeId=${scope.row.qrcodeId}`"
+                                :src="`https://api.pwmqr.com/qrcode/create/?url=http://云主机ip:32555/static/code-view/view.html?qrcodeId=${scope.row.qrcodeId}`"
                                 style="width: 120px;height: 120px"></el-image>
                     </template>
                 </el-table-column>
@@ -73,7 +73,7 @@
 </template>
 
 <script>
-
+//todo，修改
     import {myQrcode, deleteQRcode} from '../../api/qrcode'
 
     export default {
